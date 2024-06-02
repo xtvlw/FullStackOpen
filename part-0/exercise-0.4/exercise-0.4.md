@@ -37,7 +37,7 @@ sequenceDiagram
     Server-->> Client: 404 Not Found
     deactivate Server
 
-    rect rgba(50, 50, 50)
+    critical when the frontend send request to add a note 
     	Client->> Server: POST /new_note
         activate Server
         
