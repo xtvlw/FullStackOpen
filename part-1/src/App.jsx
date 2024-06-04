@@ -11,7 +11,7 @@ const Header = ({courseName}) => {
 const Content = ({ data }) => {
   return <div>
   {data.map(item => {
-    return <Part key={Math.random()} text={item.parts} exercise={item.exercises} />
+    return <Part key={Math.random()} text={item.name} exercise={item.exercises} />
   })}
   </div>
 }
@@ -23,27 +23,20 @@ const Total = ({ numberOfExercises }) => {
 const App = () => {
 
   const course = 'Half Stack application development'
-  const part1 = 'Fundamentals of React'
-  const exercises1 = 10
-  const part2 = 'Using props to pass data'
-  const exercises2 = 7
-  const part3 = 'State of a component'
-  const exercises3 = 14
+  const part1 = {
+    name: 'Fundamentals of React',
+    exercises: 10
+  }
+  const part2 = {
+    name: 'Using props to pass data',
+    exercises: 7
+  }
+  const part3 = {
+    name: 'State of a component',
+    exercises: 14
+  }
 
-  const arrayOfParts = [
-      {
-        parts: part1,
-        exercises: exercises1
-      },
-      {
-        parts: part2,
-        exercises: exercises2
-      },
-      {
-        parts: part3,
-        exercises: exercises3
-      }
-    ]
+  const arrayOfParts = [part1, part2, part3]
 
   return (
     <div>
@@ -51,7 +44,7 @@ const App = () => {
 
       <Content data={ arrayOfParts } />
 
-      <Total numberOfExercises={exercises1 + exercises2 + exercises3} />
+      <Total numberOfExercises={part1.exercises + part2.exercises + part3.exercises} />
     </div>
   )
 }
