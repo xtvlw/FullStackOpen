@@ -1,11 +1,19 @@
 
 
+const Part = ({ text, exercise }) => {
+  return <p>{text} {exercise}</p>
+}
+
 const Header = ({courseName}) => {
   return <h1>{courseName}</h1>
 }
 
-const Content = ({ part, exercise }) => {
-  return <p>{part} {exercise}</p>
+const Content = ({ data }) => {
+  return <div>
+  {data.map(item => {
+    return <Part key={Math.random()} text={item.parts} exercise={item.exercises} />
+  })}
+  </div>
 }
 
 const Total = ({ numberOfExercises }) => {
@@ -22,13 +30,26 @@ const App = () => {
   const part3 = 'State of a component'
   const exercises3 = 14
 
+  const arrayOfParts = [
+      {
+        parts: part1,
+        exercises: exercises1
+      },
+      {
+        parts: part2,
+        exercises: exercises2
+      },
+      {
+        parts: part3,
+        exercises: exercises3
+      }
+    ]
+
   return (
     <div>
       <Header courseName={course} />
 
-      <Content part={part1} exercise={exercises1} />
-      <Content part={part2} exercise={exercises2} />
-      <Content part={part3} exercise={exercises3} />
+      <Content data={ arrayOfParts } />
 
       <Total numberOfExercises={exercises1 + exercises2 + exercises3} />
     </div>
