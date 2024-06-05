@@ -1,5 +1,18 @@
 import { useState } from 'react'
 
+const DisplayQuote = ({ data })=> {
+  return <div>
+    <p>{data.quote}</p>
+    <p>This quote have {data.votes} votes</p>
+  </div>
+}
+
+const Button = ({ funct, text }) => {
+  return <button onClick={funct}>
+  {text}
+  </button>
+}
+
 const App = () => {
   const anecdotes = [
     {
@@ -19,7 +32,7 @@ const App = () => {
       quote: 'Any fool can write code that a computer can understand. Good programmers write code that humans can understand.'
     },
     {
-      votes: 0,
+      votes: 1,
       quote: 'Premature optimization is the root of all evil.'
     },
     {
@@ -38,6 +51,7 @@ const App = () => {
 
   const [data, setData] = useState(anecdotes);
   const [selected, setSelected] = useState(0);
+  const [mostVoted, setMostVoted] = useState(anecdotes[4]);
 
   const changeQuote = () => {
     const randIndex = Number.parseInt(Math.random() * anecdotes.length);
@@ -47,22 +61,22 @@ const App = () => {
   const voteToQuote = () => {
     const addVote = { ...data };
     addVote[selected].votes += 1;
+    if (addVote[selected].votes >= mostVoted.votes) {
+      setMostVoted(addVote[selected]);
+    }
     setData(addVote);
   }
 
   return (
     <div>
-      <p>{data[selected].quote}</p>
-      <p>This quote have: {data[selected].votes} votes</p>
-      <div>
-        <button onClick={voteToQuote}>
-          Vote
-        </button>
-        <button onClick={changeQuote}>
-          click to change quote
-        </button>
-      </div>
+      <h1>Anecdotes of the day</h1>
+      <DisplayQuote data={data[selected]} />
 
+      <Button funct={voteToQuote} text="Vote" />
+      <Button funct={changeQuote} text="click to change quote" />
+
+      <h2>Most voted quote</h2>
+      <DisplayQuote data={mostVoted} />
     </div>
   )
 }
