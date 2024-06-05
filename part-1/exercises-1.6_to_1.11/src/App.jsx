@@ -1,5 +1,5 @@
 import { useState } from 'react'
-
+import "./app.css"
 
 const Button = ({ text, setter }) => {
 
@@ -27,14 +27,14 @@ const FeedbackButtons = ({ buttons, statistics }) => {
     if (id == "good") {
       numOfPositiveReview = addOne
     }
-    const newPositiveStat = numOfPositiveReview * 100 / newSum;
+    const newPositiveStat = numOfPositiveReview * 100 / newSum + "%";
     statistics.filter(n => n.id == "positive")[0].setter(newPositiveStat);
 
 
     let numOfBadReview = buttons
       .filter(n => n.id == "bad")[0].content;
     if (id == "bad") {
-      numOfPositiveReview = addOne;
+      numOfBadReview = addOne;
     }
 
     const newAverege = (numOfPositiveReview - numOfBadReview) / newSum;
@@ -55,28 +55,43 @@ const FeedbackButtons = ({ buttons, statistics }) => {
 }
 
 const DisplayResults = ({ text, value }) => {
-  return <>
-    <p>{text}: {value}</p>
-  </>
+  return <tr>
+    <td>{text}</td>
+    <td>{value}</td>
+  </tr>
 }
 
 const Statistics = ({ data }) => {
-
+  if (data.statistics.filter(n => n.id == "sum")[0].content == 0) {
+      return <>
+        <p>No feedback given</p>
+      </>
+  }
   return <>
     <h2>Statistics</h2>
-    {data.buttons.map( item => {
-      return <DisplayResults
-        key={Math.random()}
-        text={item.text}
-        value={item.content} />
-    })}
-    <hr />
-    {data.statistics.map( item => {
-      return <DisplayResults
-        key={Math.random()}
-        text={item.text}
-        value={item.content} />
-    })}
+    <table>
+      <thead>
+        <tr>
+          <th>Data</th>
+          <th>Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        {data.buttons.map( item => {
+          return <DisplayResults
+            key={Math.random()}
+            text={item.text}
+            value={item.content} />
+        })}
+
+        {data.statistics.map( item => {
+          return <DisplayResults
+            key={Math.random()}
+            text={item.text}
+            value={item.content} />
+        })}
+      </tbody>
+    </table>
   </>
 }
 
@@ -87,7 +102,7 @@ function App() {
   const [goodReview, setGoodReview] = useState(0);
 
   const [averegeReview, setAveregeReview] = useState(0);
-  const [reviewSum, setReviewSum] = useState(0);
+  const [reviewSum, setReviewSum] = useState("");
   const [positiveReview, setPositiveReview] = useState(0);
 
   const data = {
