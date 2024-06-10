@@ -1,6 +1,7 @@
 import { useState } from 'react'
 
 import Form from "./components/Form.jsx"
+import FormInput from "./components/FormInput.jsx"
 import DisplayContacts from "./components/DisplayContacts.jsx"
 
 
@@ -13,7 +14,8 @@ const App = () => {
   ])
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
-
+  const [search, setSearch] = useState(false)
+  const [filteredContact, setFilteredContact] = useState(persons)
 
   const isPersonAdded = name => {
 
@@ -39,17 +41,45 @@ const App = () => {
     }
 
     setPersons([...persons, newPerson])
+    setFilteredContact([...persons, newPerson])
+  }
+
+
+  const changeSearch = event => {
+    const newSearch = event.target.value
+
+    if (newSearch === '') {
+      setFilteredContact(persons)
+      return
+    }
+
+
+    setFilteredContact(persons.filter(person => {
+        const lowerCasePerson = person.name.toLowerCase()
+        const lowerCaseSearch = newSearch.toLowerCase()
+
+        if (lowerCasePerson.includes(lowerCaseSearch)) {
+          return person
+        }
+
+      }))
+
   }
 
   return (
     <div>
+
       <h2>Phonebook</h2>
+
+      <FormInput text="Filter shown with" updateHandler={changeSearch} />
+
+      <h2>Add a new contact</h2>
 
       <Form addPerson={addPerson} setNewName={setNewName} setNewNumber={setNewNumber}/>
 
       <h2>Numbers</h2>
 
-      <DisplayContacts contacts={persons} />
+      <DisplayContacts contacts={filteredContact} />
 
     </div>
   )
