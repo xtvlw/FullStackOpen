@@ -9,10 +9,25 @@ const App = () => {
   const changeName = event => {
     setNewName(event.target.value)
   }
+  const isPersonAdded = name => {
+    const personCheck = persons.find(p => p.name === name)
+    console.log(personCheck)
+    if (personCheck != undefined){
+      return true
+    }
+
+    return false
+  }
 
   const addPerson = event => {
     event.preventDefault()
     const newPerson = { name: newName }
+
+    if (isPersonAdded(newPerson.name)) {
+      alert(`${newPerson.name} is already added to the phonebook`)
+      return
+    }
+
     setPersons([...persons, newPerson])
   }
 
