@@ -33,19 +33,42 @@ const App = () => {
     return false
   }
 
+  const updatePerson = person => {
+    server.update(person)
+        .then(data => {
+          setPersons(persons.map(p => p.id == person.id ? person : p))
+          setFilteredContact(persons.map(p => p.id == person.id ? person : p))
+        })
+  }
+
   const addPerson = event => {
     event.preventDefault()
 
     const lastId = persons[persons.length - 1].id
-    const newId = lastId + 1
+    const newId = Number(lastId) + 1
+
     const newPerson = {
       name: newName,
       number: newNumber,
-      id: newId
+      id: newId.toString()
     }
 
     if (isPersonAdded(newPerson.name)) {
-      alert(`${newPerson.name} is already added to the phonebook`)
+
+      const updateUser = confirm(`${newPerson.name} is already added to the phonebook, do you want to update the number?`)
+
+      if (updateUser){
+        const person = persons.filter(p => p.name === newPerson.name)[0]
+
+        const updatedPerson = {
+          name: person.name,
+          number: newPerson.number,
+          id: person.id.toString()
+        }
+
+        updatePerson(updatedPerson)
+      }
+
       return
     }
 
@@ -55,13 +78,12 @@ const App = () => {
     })
   }
 
-
-  const deleteHandler = event => {
+  const deletePerson = event => {
     const id = event.target.id
     server.deletePerson(id)
         .then(status => {
-          setPersons(persons.filter(p => p.id != id))
-          setFilteredContact(persons.filter(p => p.id != id))
+          setPersons(persons.filter(person => person.id != id))
+          setFilteredContact(persons.filter(person => person.id != id))
         })
   }
 
@@ -80,7 +102,7 @@ const App = () => {
 
       <h2>Numbers</h2>
 
-      <DisplayContacts contacts={filteredContact} deleteHandler={deleteHandler} />
+      <DisplayContacts contacts={filteredContact} deleteHandler={deletePerson} />
 
     </div>
   )
