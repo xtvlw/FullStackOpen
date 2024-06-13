@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react'
-import axios from "axios"
+
 
 import Form from "./components/Form.jsx"
 import FormInput from "./components/FormInput.jsx"
 import DisplayContacts from "./components/DisplayContacts.jsx"
 import Filter from "./components/Filter.jsx"
 
+import server from  "./services/phonebook"
 
 const App = () => {
 
@@ -15,11 +16,10 @@ const App = () => {
   const [filteredContact, setFilteredContact] = useState([])
 
   useEffect(() => {
-    axios
-    .get("http://localhost:3001/persons")
+    server.getAll()
     .then(res => {
-      setPersons(res.data)
-      setFilteredContact(res.data)
+      setPersons(res)
+      setFilteredContact(res)
     })
   }, [])
 
@@ -47,13 +47,10 @@ const App = () => {
       return
     }
 
-    axios
-      .post(`http://localhost:3001/persons/`, newPerson)
-      .then(res => res.data)
-      .then(data =>{
-        setPersons([...persons, data])
-        setFilteredContact([...persons, data])
-      })
+    server.add(newPerson).then(res => {
+      setPersons([...persons, res])
+      setFilteredContact([...persons, res])
+    })
   }
 
 
