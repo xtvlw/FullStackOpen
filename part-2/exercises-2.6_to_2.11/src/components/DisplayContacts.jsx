@@ -1,13 +1,18 @@
 
-const DisplayContacts = ({ contacts }) => {
+import Button from "./Button.jsx"
+
+const DisplayContacts = ({ contacts, deleteHandler }) => {
   return (
-    <div>
+    <>
       {contacts === undefined ?
           <p></p> :
           contacts.map(person => {
-        return <p key={person.id}>{person.name} {person.number}</p>
+        return <div key={person.id}>
+          <p>{person.name} {person.number}</p>
+          <Button id={person.id} label="Delete" deleteHandler={deleteHandler} />
+          </div>
       })}
-    </div>
+    </>
   )
 }
 

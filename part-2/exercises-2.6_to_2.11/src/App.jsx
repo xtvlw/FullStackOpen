@@ -36,10 +36,12 @@ const App = () => {
   const addPerson = event => {
     event.preventDefault()
 
+    const lastId = persons[persons.length - 1].id
+    const newId = lastId + 1
     const newPerson = {
       name: newName,
       number: newNumber,
-      id: persons.length + 1
+      id: newId
     }
 
     if (isPersonAdded(newPerson.name)) {
@@ -51,6 +53,16 @@ const App = () => {
       setPersons([...persons, res])
       setFilteredContact([...persons, res])
     })
+  }
+
+
+  const deleteHandler = event => {
+    const id = event.target.id
+    server.deletePerson(id)
+        .then(status => {
+          setPersons(persons.filter(p => p.id != id))
+          setFilteredContact(persons.filter(p => p.id != id))
+        })
   }
 
 
@@ -68,7 +80,7 @@ const App = () => {
 
       <h2>Numbers</h2>
 
-      <DisplayContacts contacts={filteredContact} />
+      <DisplayContacts contacts={filteredContact} deleteHandler={deleteHandler} />
 
     </div>
   )
