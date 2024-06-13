@@ -1,6 +1,5 @@
 
 const DisplayContacts = ({ contacts }) => {
-
   return (
     <div>
       {contacts === undefined ?

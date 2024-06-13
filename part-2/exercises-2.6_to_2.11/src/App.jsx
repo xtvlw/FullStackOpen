@@ -47,8 +47,13 @@ const App = () => {
       return
     }
 
-    setPersons([...persons, newPerson])
-    setFilteredContact([...persons, newPerson])
+    axios
+      .post(`http://localhost:3001/persons/`, newPerson)
+      .then(res => res.data)
+      .then(data =>{
+        setPersons([...persons, data])
+        setFilteredContact([...persons, data])
+      })
   }
 
 
