@@ -55,15 +55,15 @@ const App = () => {
 
     if (isPersonAdded(newPerson.name)) {
 
-      const updateUser = confirm(`${newPerson.name} is already added to the phonebook, do you want to update the number?`)
+      const userWantsToUpdate = confirm(`${newPerson.name} is already added to the phonebook, do you want to update the number?`)
 
-      if (updateUser){
-        const person = persons.filter(p => p.name === newPerson.name)[0]
+      if (userWantsToUpdate){
+        const personToUpdate = persons.filter(p => p.name === newPerson.name)[0]
 
         const updatedPerson = {
-          name: person.name,
+          name: personToUpdate.name,
           number: newPerson.number,
-          id: person.id.toString()
+          id: personToUpdate.id.toString()
         }
 
         updatePerson(updatedPerson)
