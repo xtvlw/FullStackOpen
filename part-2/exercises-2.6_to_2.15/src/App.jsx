@@ -5,8 +5,12 @@ import Form from "./components/Form.jsx"
 import FormInput from "./components/FormInput.jsx"
 import DisplayContacts from "./components/DisplayContacts.jsx"
 import Filter from "./components/Filter.jsx"
+import Message from "./components/Message.jsx"
 
 import server from  "./services/phonebook"
+
+import "./index.css"
+
 
 const App = () => {
 
@@ -14,6 +18,10 @@ const App = () => {
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [filteredContact, setFilteredContact] = useState([])
+
+  const [messageProps, setMessageProps] = useState({
+    isActive: false
+  })
 
   useEffect(() => {
     server.getAll()
@@ -23,6 +31,15 @@ const App = () => {
     })
   }, [])
 
+
+  const updateMessage = newMessage => {
+
+    setMessageProps(newMessage)
+
+    const updateMessageTimeout = setTimeout(() => {
+      setMessageProps({...messageProps, isActive: false})
+    }, 2000)
+  }
 
   const isPersonAdded = name => {
     const personCheck = persons.find(p => p.name === name)
@@ -36,8 +53,17 @@ const App = () => {
   const updatePerson = person => {
     server.update(person)
         .then(data => {
+
           setPersons(persons.map(p => p.id == person.id ? person : p))
           setFilteredContact(persons.map(p => p.id == person.id ? person : p))
+
+          const newMessage = {
+            label: `${person.name} was updated`,
+            isActive: true,
+            type: "positive"
+          }
+          updateMessage(newMessage)
+
         })
   }
 
@@ -72,19 +98,48 @@ const App = () => {
       return
     }
 
-    server.add(newPerson).then(res => {
-      setPersons([...persons, res])
-      setFilteredContact([...persons, res])
+    server.add(newPerson).then(newPerson => {
+      const newPersonArray = [...persons, newPerson]
+
+      setPersons(newPersonArray)
+      setFilteredContact(newPersonArray)
+
+      const newMessage = {
+            label: `${newPerson.name} was added`,
+            isActive: true,
+            type: "positive"
+      }
+      updateMessage(newMessage)
+
     })
   }
 
   const deletePerson = event => {
     const id = event.target.id
+
+    const newPersons = persons.filter(person => person.id != id)
+    const deletedPerson = persons.find(p => p.id == id)
+
     server.deletePerson(id)
         .then(status => {
-          setPersons(persons.filter(person => person.id != id))
-          setFilteredContact(persons.filter(person => person.id != id))
+          const newMessage = {
+            label: `${deletedPerson.name} was deleted`,
+            isActive: true,
+            type: "positive"
+          }
+          updateMessage(newMessage)
+    })
+        .catch(err => {
+          const newMessage = {
+            label: `${deletedPerson.name} was already deleted`,
+            isActive: true,
+            type: "negative"
+          }
+          updateMessage(newMessage)
         })
+
+        setPersons(newPersons)
+        setFilteredContact(newPersons)
   }
 
 
@@ -93,6 +148,9 @@ const App = () => {
     <div>
 
       <h2>Phonebook</h2>
+
+      <Message label={messageProps.label} type={messageProps.type} showMessage={messageProps.isActive} />
+
 
       <Filter persons={persons} setFilteredContact={setFilteredContact} />
 
