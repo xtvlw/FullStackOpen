@@ -3,7 +3,7 @@ import DisplayLanguages from "./DisplayLanguages.jsx"
 import "./DisplayCountry.style.css";
 import "./_variables.style.css"
 
-const DisplayCountry  = ({ data }) => {
+const DisplayCountry  = ({ data, setNewFilter }) => {
     const country = data[0]
 
     const area = new Intl.NumberFormat().format(country.area)
@@ -15,7 +15,7 @@ const DisplayCountry  = ({ data }) => {
         <div className="country-info">
           <p>Capital: {country.capital[0]}</p>
           <p>Area: {area} Km<sup>2</sup></p>
-          <DisplayLanguages data={country.languages} />
+          <DisplayLanguages data={country.languages} setNewFilter={setNewFilter}/>
         </div>
         <img className="country-flag" src={country.flags.svg} alt={country.flags.alt} />
       </div>

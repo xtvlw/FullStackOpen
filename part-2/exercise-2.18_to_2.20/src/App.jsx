@@ -24,6 +24,13 @@ function App() {
   }, [])
 
 
+  const setNewFilter = event => {
+    const country = event.target.value
+    console.log(country)
+    const newCountry = rawSearchData.filter(item => item.name.common == country)
+    setFilteredData(newCountry)
+  }
+
   const searchInRawData = (searchName) => {
     if (searchName == '') {
       setFilteredData(rawSearchData)
@@ -52,7 +59,7 @@ function App() {
       {filteredData.length === 1 ?
         <DisplayCountry data={filteredData}/> :
         filteredData.length < 10 ?
-        <List data={filteredData} /> :
+        <List data={filteredData}  setNewFilter={setNewFilter} /> :
         <p>There's too may countries to display</p>
       }
     </>

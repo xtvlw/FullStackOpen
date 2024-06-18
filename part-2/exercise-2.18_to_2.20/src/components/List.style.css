@@ -17,3 +17,6 @@ ul.official-list{
     font-weight: lighter;
     font-style: italic;
 }
+.list-button {
+    flex-dierction: end;
+}
