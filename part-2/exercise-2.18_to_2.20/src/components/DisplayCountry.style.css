@@ -1,0 +1,10 @@
+img.country-flag {
+    width: min(500px, 75%);
+    border-radius: 15px;
+}
+div.country-info {
+    text-align: left;
+}
+h1.ccountry-name {
+    margin-bottom: 0px;
+}

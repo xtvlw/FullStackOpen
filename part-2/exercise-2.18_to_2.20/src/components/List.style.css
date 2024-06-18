@@ -1,0 +1,19 @@
+ul.country,
+ul.official-list{
+    list-style: none;
+    text-align: left;
+}
+
+.country-list-item {
+    font-weight: bold;
+    margin-top: 15px;
+}
+
+.official-list {
+    padding-left: 15px;
+    border-bottom: 1px solid var(--bottom-border-color);
+}
+.official-list-item {
+    font-weight: lighter;
+    font-style: italic;
+}

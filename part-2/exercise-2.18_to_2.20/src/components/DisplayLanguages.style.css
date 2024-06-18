@@ -1,0 +1,8 @@
+ul.language-list {
+    list-style: none;
+    padding-left: 10px;
+    border-bottom: 1px solid var(--bottom-border-color);
+    margin-top: 5px;
+    margin-bottom: 20px;
+}
+
