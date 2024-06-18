@@ -26,7 +26,6 @@ function App() {
 
   const setNewFilter = event => {
     const country = event.target.value
-    console.log(country)
     const newCountry = rawSearchData.filter(item => item.name.common == country)
     setFilteredData(newCountry)
   }
