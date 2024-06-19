@@ -7,16 +7,19 @@ ul.official-list{
 .country-list-item {
     font-weight: bold;
     margin-top: 15px;
+    width: 100%;
 }
 
 .official-list {
     padding-left: 15px;
-    border-bottom: 1px solid var(--bottom-border-color);
 }
+
 .official-list-item {
     font-weight: lighter;
     font-style: italic;
 }
+
 .list-button {
-    flex-dierction: end;
+    border-color: #8f8f8f;
+    margin: 15px;
 }

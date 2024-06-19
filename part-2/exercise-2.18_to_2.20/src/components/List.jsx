@@ -9,14 +9,14 @@ const List  = ({ data, setNewFilter }) => {
     <ul className="country">
     {data.map(item => {
         return(
-          <div key={item.name.common} className="flex">
+          <div key={item.name.common} className="flex bottom-border">
             <li  className="country-list-item">
               {item.name.common}
               <ul className="official-list">
                 <li className="official-list-item" >{item.name.official}</li>
               </ul>
             </li>
-            <div>
+            <div className="center-flex">
               <button className="list-button" value={item.name.common} onClick={setNewFilter}>
                 show
               </button>

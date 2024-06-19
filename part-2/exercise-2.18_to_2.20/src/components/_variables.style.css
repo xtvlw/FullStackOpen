@@ -1,14 +1,27 @@
 :root {
     --bottom-border-color: #ccc;
 }
+
 .no-margin {
     margin: 0px;
 }
+
 .sub-title {
     font-style: italic;
     margin-top: 0px;
     padding: 0px;
 }
+
 .flex {
     display: flex;
+}
+
+.center-flex {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.bottom-border {
+    border-bottom: 1px solid var(--bottom-border-color);
 }

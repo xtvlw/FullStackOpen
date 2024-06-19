@@ -1,6 +1,7 @@
 img.country-flag {
     width: min(500px, 75%);
     border-radius: 15px;
+    outline: 2px solid var(--bottom-border-color);
 }
 div.country-info {
     text-align: left;
