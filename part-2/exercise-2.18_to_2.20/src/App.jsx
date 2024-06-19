@@ -61,6 +61,10 @@ function App() {
         <List data={filteredData}  setNewFilter={setNewFilter} /> :
         <p>There's too may countries to display</p>
       }
+      <footer>
+        <p>icons from <em>adwaita</em></p>
+        <p>Weather API from <em>open-meteo.com</em></p>
+      </footer>
     </>
   )
 }
