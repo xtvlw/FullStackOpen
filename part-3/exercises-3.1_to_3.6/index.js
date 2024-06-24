@@ -24,9 +24,23 @@ const people = [
     }
 ]
 
-app.get('/persons', (req, res) => {
+app.get('/api/persons', (req, res) => {
     res.send(people);
 })
+
+
+app.get('/api/persons/:id', (req, res) => {
+    const id = req.params.id;
+    const personFromId = people.filter(p => p.id == id);
+    const doesPersonExist = personFromId.length == 0 ? false : true;
+
+    if (!doesPersonExist) {
+        res.status(204).end();
+        return;
+    }
+    res.send(personFromId);
+})
+
 
 app.get('/info', (req, res) => {
     const date = new Date();
@@ -34,7 +48,7 @@ app.get('/info', (req, res) => {
     res.send(`<div>
     <p>Phonebook has info for ${numberOfPeople} people</p>
     <p>${date}</p>
-    </div>`)
+    </div>`);
 })
 
 const PORT = 3001;
