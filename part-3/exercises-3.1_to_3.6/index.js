@@ -1,6 +1,8 @@
 const express = require("express");
 const app = express()
 
+app.use(express.json())
+
 let people = [
     {
       "id": "1",
@@ -24,6 +26,18 @@ let people = [
     }
 ]
 
+
+const generateId = () => {
+    const newId = parseInt(Math.random(1, 10000) * 10000).toString();
+    console.log(newId)
+    const isIdUsed = people.findIndex(p => p.id == newId) == -1 ? false : true;
+    if (isIdUsed) {
+        return generateId();
+    }
+    return newId;
+}
+
+
 app.get('/api/persons', (req, res) => {
     res.send(people);
 })
@@ -39,6 +53,28 @@ app.get('/api/persons/:id', (req, res) => {
         return;
     }
     res.send(personFromId);
+})
+
+
+app.post('/api/persons', (req, res) => {
+    const body = req.body;
+
+    if (!body.name) {
+        res.statu(400).json({
+            error: "No Name."
+        });
+        return;
+    }
+
+    const newPerson = {
+        id: generateId(),
+        name: body.name,
+        number: body.number
+    }
+
+    people.push(newPerson)
+    res.status(200).send(newPerson);
+
 })
 
 app.delete('/api/persons/:id', (req, res) =>  {
