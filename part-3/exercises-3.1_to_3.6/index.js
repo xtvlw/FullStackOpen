@@ -28,6 +28,14 @@ app.get('/persons', (req, res) => {
     res.send(people);
 })
 
+app.get('/info', (req, res) => {
+    const date = new Date();
+    const numberOfPeople = people.length;
+    res.send(`<div>
+    <p>Phonebook has info for ${numberOfPeople} people</p>
+    <p>${date}</p>
+    </div>`)
+})
 
 const PORT = 3001;
 app.listen(PORT, () => {
