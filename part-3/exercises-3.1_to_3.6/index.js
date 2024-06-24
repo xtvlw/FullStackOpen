@@ -29,12 +29,42 @@ let people = [
 
 const generateId = () => {
     const newId = parseInt(Math.random(1, 10000) * 10000).toString();
-    console.log(newId)
     const isIdUsed = people.findIndex(p => p.id == newId) == -1 ? false : true;
     if (isIdUsed) {
         return generateId();
     }
     return newId;
+}
+
+
+const checkBody = (body) => {
+    if (!body.name) {
+        return {
+            status: 400,
+            message: "No Name."
+        }
+    }
+
+    if (!body.number) {
+        return {
+            status: 400,
+            message: "No Number."
+        }
+    }
+
+    const isNameUnique = people.find(p => p.name == body.name) == undefined ? true : false;
+    if (!isNameUnique) {
+        return {
+            status: 400,
+            message: "Name needs to be unique."
+        }
+    }
+
+    return {
+        status: 200,
+        message: "OK."
+    }
+
 }
 
 
@@ -59,10 +89,10 @@ app.get('/api/persons/:id', (req, res) => {
 app.post('/api/persons', (req, res) => {
     const body = req.body;
 
-    if (!body.name) {
-        res.statu(400).json({
-            error: "No Name."
-        });
+    const checker = checkBody(body);
+
+    if (checker.status != 200) {
+        res.status(checker.status).json(checker.message);
         return;
     }
 
@@ -73,7 +103,9 @@ app.post('/api/persons', (req, res) => {
     }
 
     people.push(newPerson)
-    res.status(200).send(newPerson);
+    res.status(200).json({
+        message: "Person Added."
+    });
 
 })
 
