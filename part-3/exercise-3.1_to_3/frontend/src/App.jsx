@@ -100,7 +100,7 @@ const App = () => {
 
     server.add(newPerson).then(newPerson => {
       const newPersonArray = [...persons, newPerson]
-
+      console.log(newPerson)
       setPersons(newPersonArray)
       setFilteredContact(newPersonArray)
 
