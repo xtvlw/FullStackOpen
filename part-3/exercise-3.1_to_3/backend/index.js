@@ -21,6 +21,8 @@ morgan.token('content', (req) => {
 
 app.use(express.json())
 app.use(cors())
+app.use(express.static("dist"))
+
 app.use(morgan(':method :url :status :res[content-length] - :response-time[3] ms  :content'));
 
 
