@@ -78,7 +78,7 @@ const App = () => {
       number: newNumber,
       id: newId.toString()
     }
-
+    console.log(newPerson)
     if (isPersonAdded(newPerson.name)) {
 
       const userWantsToUpdate = confirm(`${newPerson.name} is already added to the phonebook, do you want to update the number?`)

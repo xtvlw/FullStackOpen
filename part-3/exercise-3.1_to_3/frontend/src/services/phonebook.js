@@ -11,7 +11,7 @@ const getAll = () => {
 
 const add = newPerson => {
     const request = axios.post(baseUrl, newPerson)
-    return request.then(res => res.data)
+    return request.then(res => newPerson)
 }
 
 const deletePerson = id => {
