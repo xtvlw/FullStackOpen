@@ -1,6 +1,6 @@
 import axios from "axios"
 
-const baseUrl = "http://localhost:3001/api/persons"
+const baseUrl = "https://fullstackopen-hci8.onrender.com/api/persons"
 
 
 const getAll = () => {
